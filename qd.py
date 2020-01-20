@@ -1,11 +1,7 @@
 #!/usr/bin/python
 
 from enum import Enum, auto
-
-
 from os import path
-
-
 import pyexcel as pe
 
 
@@ -112,8 +108,6 @@ class Vocabulary_Worker:
 
     def get_vocabulary(self):
         return self.words.get_vocabulary()
-
-
 
     def run():
         pass

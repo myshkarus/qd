@@ -7,7 +7,7 @@ import sys
 sys.path.append(os.path.abspath('./'))
 
 
-def setup():
+def _retrieve_config():
     try:
         config = ConfigParser()
         with open('./config/config.ini') as f:
@@ -15,15 +15,23 @@ def setup():
             config.read(f, encoding='utf-8')
     except IOError as err:
         print('config.ini is not exist: ', err)
+    return config
 
+
+def setup():
     proxy = config.get('proxy', 'url')
-    print('proxy: ', proxy)
-
     os.environ['http_proxy'] = proxy
     os.environ['HTTP_PROXY'] = proxy
     os.environ['https_proxy'] = proxy
     os.environ['HTTPS_PROXY'] = proxy
 
+
+def use_proxy():
+    if bool(config.getboolean('Default', 'use_proxy')):
+        return True
+
+
+config = _retrieve_config()
 
 if __name__ == '__main__':
     setup()

@@ -8,13 +8,19 @@ from crawler import Crawler
 class Publisher(ABC):
     @abstractmethod
     def __init__(self, url=None, pattern=None):
+        self._entry_url = None
         self.url = url
         self.pattern = pattern
-        self.worker = Crawler
+        self.worker = Crawler()
 
     @property
     def entry_url(self):
-        return self.worker.entry_url
+        return self._entry_url
+
+    @entry_url.setter
+    def entry_url(self, some_url):
+        self.worker.entry_url = some_url
+        self._entry_url = self.worker.entry_url
 
     @property
     def url(self): pass
@@ -31,11 +37,11 @@ class Publisher(ABC):
     def pattern(self, pattern): pass
 
     def get_transcription(self, entry):
-        self.worker.entry_url = (self.url, entry)
-        # transcript = self.worker.do_work(self.pattern['transcription'])
-        # if len(transcript) > 0:
-        #     return [tr.replace(
-        #         '/', '') for tr in transcript]
+        self.entry_url = (self.url, entry)
+        transcript = self.worker.do_work(self.pattern['transcription'])
+        if len(transcript) > 0:
+            return [tr.replace(
+                '/', '') for tr in transcript]
 
 
 class Oxford(Publisher):
@@ -90,9 +96,12 @@ class Cambridge(Publisher):
 
 if __name__ == '__main__':
     ox = Oxford()
-    print(ox.entry_url)
-    # print(ox.get_transcription('was'))
+    print(
+        '{0} entry: \'was\' --> transcription {1}'.format(Oxford().__class__.__name__, ox.get_transcription('was')))
+    print('entry url: {0}'.format(ox.entry_url))
 
     print('-' * 50)
     cb = Cambridge()
-    # print(cb.get_transcription('was'))
+    print(
+        '{0} entry: \'was\' --> transcription {1}'.format(Cambridge().__class__.__name__, cb.get_transcription('was')))
+    print('entry url: {0}'.format(cb.entry_url))

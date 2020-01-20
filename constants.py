@@ -14,4 +14,4 @@ PATTERNS_CAMBRIDGE = {
 XL_FILE = 'dict.xlsx'
 XL_TABLE_START_POSITION = {'row': 3, 'column': 2}
 XL_SHEET_NAME_INCLUDE_ENGLISH = ['eng', 'english']
-XL_SHEET_NAME_INCLUDE_GERMAN = ['ger', 'german', 'deutsch']
+XL_SHEET_NAME_INCLUDE_GERMAN = ['ger', 'germ', 'german', 'deutsch']
