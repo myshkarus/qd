@@ -15,3 +15,15 @@ XL_FILE = 'dict.xlsx'
 XL_TABLE_START_POSITION = {'row': 3, 'column': 2}
 XL_SHEET_NAME_INCLUDE_ENGLISH = ['eng', 'english']
 XL_SHEET_NAME_INCLUDE_GERMAN = ['ger', 'germ', 'german', 'deutsch']
+
+ENTRY_PART = {
+    'word': 0,
+    'translation (ua)': 1,
+    'type': 2,
+    'transcription': 3,
+    'form': 4,
+    'clone': 5,
+    'page': 6,
+    'examples / explanation': 7,
+    'flag': 8
+}

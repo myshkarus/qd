@@ -1,16 +1,5 @@
 #!/usr/bin/python
 
-from enum import Enum, auto
-
-
-
-class Language(Enum):
-    English = auto()
-    German = auto()
-
-
-
-
 
 class Vocabulary_Worker:
     def __init__(self, words: Words = None):
