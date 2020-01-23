@@ -29,12 +29,19 @@ class Crawler:
         return self._extract_data(page, pattern)
 
     def _download_page(self):
-        return urlopen(self.entry_url).read().decode('utf-8')
+        try:
+            page = urlopen(self.entry_url).read().decode('utf-8')
+            return page
+        except:
+            pass
 
     def _extract_data(self, page, pattern):
-        data_pattern = re.compile(pattern, re.IGNORECASE | re.DOTALL)
-        data = data_pattern.findall(page)
-        return data
+        # print(type(page))
+        if page is not None:
+            data_pattern = re.compile(pattern, re.IGNORECASE | re.DOTALL)
+            data = data_pattern.findall(page)
+            # print('===> crawling')
+            return data
 
 
 if __name__ == '__main__':

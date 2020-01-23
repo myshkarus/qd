@@ -32,25 +32,23 @@ def get_sheet_name(lang: Language):
 
 
 def to_transcript(words):
-    my_vocabulary = dict()
+    unique_words = dict()
     for entry in words:
-        # TODO: change re pattern
-        word = re.sub(r"(-\w+)", "",
+        word = re.sub(r"\(*\)*|[!<>]|(-\w+)", "",
                       entry[c.ENTRY_PART['word']])
         transcript = re.sub(
-            r"\[*?\]*?", "", entry[c.ENTRY_PART['transcription']])
+            r"\[*?\]*?|[!/]", "", entry[c.ENTRY_PART['transcription']])
 
         word_to_array = word.split()
         transcript_to_array = transcript.split()
 
         for i, j in enumerate(word_to_array):
             if len(word_to_array) > 0 and len(word_to_array) <= len(transcript_to_array):
-                my_vocabulary[j] = transcript_to_array[i]
+                unique_words[j] = transcript_to_array[i]
             else:
-                if j not in my_vocabulary and re.findall('[a-zA-Z]', j):
-                    my_vocabulary[j] = ''
-
-    pprint.pprint(my_vocabulary)
+                if j not in unique_words and re.findall('[a-zA-Z]', j):
+                    unique_words[j] = ''
+    return unique_words
 
 
 def get_words_dictionary(lang: Language):
@@ -66,10 +64,9 @@ def get_words_list(lang: Language):
                               sheet_name=sheet_to_use,
                               start_column=c.XL_TABLE_START_POSITION['column'],
                               start_row=c.XL_TABLE_START_POSITION['row'])
-    # print(entry_list)
     return entry_list
 
 
 if __name__ == '__main__':
     r = get_words_list(Language.English)
-    to_transcript(r)
+    pprint.pprint(to_transcript(r))

@@ -39,7 +39,7 @@ class Publisher(ABC):
     def get_transcription(self, entry):
         self.entry_url = (self.url, entry)
         transcript = self.worker.do_work(self.pattern['transcription'])
-        if len(transcript) > 0:
+        if transcript is not None and len(transcript) > 0:
             return [tr.replace(
                 '/', '') for tr in transcript]
 
