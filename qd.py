@@ -25,8 +25,8 @@ class Worker:
         words_dict = words.to_transcript(words_from_file)
         for key, value in words_dict.items():
             if not value.strip():
-                print('key: {0}; value: {1}; len: {2}'.format(
-                    key, value, len(value)))
+                # print('key: {0}; value: {1}'.format(
+                    # key, value)
                 words_dict[key] = strategy().get_transcription(key)
         pprint.pprint(words_dict)
 
