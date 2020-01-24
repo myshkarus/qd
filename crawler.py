@@ -41,6 +41,8 @@ class Crawler:
             data_pattern = re.compile(pattern, re.IGNORECASE | re.DOTALL)
             data = data_pattern.findall(page)
             # print('===> crawling')
+            if data is None:
+                data = ' '
             return data
 
 

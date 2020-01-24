@@ -23,11 +23,13 @@ class Worker:
     def run(self, strategy: strategy.Publisher = strategy.Oxford):
         words_from_file = words.get_words_list(self.lang)
         words_dict = words.to_transcript(words_from_file)
+        pprint.pprint(words_dict)
+        i = 0
         for key, value in words_dict.items():
             if not value.strip():
-                # print('key: {0}; value: {1}'.format(
-                    # key, value)
+                print('+' * i)
                 words_dict[key] = strategy().get_transcription(key)
+                i += 1
         pprint.pprint(words_dict)
 
 
