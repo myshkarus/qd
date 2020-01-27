@@ -40,8 +40,11 @@ class Publisher(ABC):
         self.entry_url = (self.url, entry)
         transcript = self.worker.do_work(self.pattern['transcription'])
         if transcript is not None and len(transcript) > 0:
-            return [tr.replace(
+            transcript_full = [tr.replace(
                 '/', '') for tr in transcript]
+            if len(transcript_full) > 1:
+                transcript_full[1] = f'({transcript_full[1]})'
+            return transcript_full[:2]
 
 
 class Oxford(Publisher):

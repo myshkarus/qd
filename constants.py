@@ -11,7 +11,7 @@ PATTERNS_CAMBRIDGE = {
     'transcription': '<span class="ipa dipa lpr-2 lpl-1">(.*?)\</span>'
 }
 
-XL_FILE = 'dict.xlsx'
+XL_FILE = '_dict.xlsx'
 XL_TABLE_START_POSITION = {'row': 3, 'column': 2}
 XL_SHEET_NAME_INCLUDE_ENGLISH = ['eng', 'english']
 XL_SHEET_NAME_INCLUDE_GERMAN = ['ger', 'germ', 'german', 'deutsch']

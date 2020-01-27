@@ -36,11 +36,9 @@ class Crawler:
             pass
 
     def _extract_data(self, page, pattern):
-        # print(type(page))
         if page is not None:
             data_pattern = re.compile(pattern, re.IGNORECASE | re.DOTALL)
             data = data_pattern.findall(page)
-            # print('===> crawling')
             if data is None:
                 data = ' '
             return data

@@ -6,14 +6,12 @@ from enum import Enum, auto
 import constants as c
 import re
 import pprint
+import openpyxl
 
 
 class Language(Enum):
     English = auto()
     German = auto()
-
-
-# sheet_to_use = str('')
 
 
 def get_sheet_name(lang: Language):
@@ -72,15 +70,33 @@ def get_words_list(lang: Language):
     return entry_list
 
 
-def write_transcription(lang: Language):
+def write_transcription(lang: Language, word_dict: dict = None):
     sheet_to_use = get_sheet_name(lang)
-    content = pe.get_sheet(file_name=c.XL_FILE,
-                           sheet_name=sheet_to_use)
-    print('UsedRange: {0} {1}'.format(
-        content.number_of_rows(), content.number_of_columns()))
-    for i in content.enumerate():
-        print(i)
-    # content.enumerate()
+    wb = openpyxl.load_workbook(filename=c.XL_FILE)
+    sheet = wb[sheet_to_use]
+    for row in sheet.iter_rows(min_row=c.XL_TABLE_START_POSITION['row'] + 1,
+                               min_col=c.XL_TABLE_START_POSITION['column']):
+        # word: 1
+        # transcription: 4
+        row[4].value = prepare_entry(row[1].value, word_dict)
+    wb.save(filename=c.XL_FILE)
+
+
+def prepare_entry(word: str, word_dict: dict):
+    if word_dict is not None:
+        depart = word.split()
+        result = list()
+
+        for w in depart:
+            if re.findall('[a-zA-Z]', w):
+                s = word_dict.get(w, None)
+                if s is None:
+                    s = '...'
+                print(s)
+                result.append(s)
+        result_string = '[{0}]'.format(
+            re.sub(r'\[*?\]*?\'*?', '', ' '.join(str(x) for x in result)))
+        return result_string.replace(',', ';')
 
 
 if __name__ == '__main__':

@@ -23,14 +23,19 @@ class Worker:
     def run(self, strategy: strategy.Publisher = strategy.Oxford):
         words_from_file = words.get_words_list(self.lang)
         words_dict = words.to_transcript(words_from_file)
-        pprint.pprint(words_dict)
-        i = 0
+        i = 1
+        j = 1
         for key, value in words_dict.items():
             if not value.strip():
-                print('+' * i)
                 words_dict[key] = strategy().get_transcription(key)
-                i += 1
-        pprint.pprint(words_dict)
+                if j > 0 and j % 50 != 0:
+                    print('+' * i)
+                    i += 1
+                else:
+                    i = 1
+                    print('{0} ==> {1}'.format('+' * i, j))
+                j += 1
+        words.write_transcription(l.English, words_dict)
 
 
 if __name__ == '__main__':
